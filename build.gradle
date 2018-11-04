@@ -1,0 +1,51 @@
+buildscript {
+repositories {
+    mavenCentral()
+    jcenter()
+}
+dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+}
+
+}
+
+apply plugin: 'java'
+
+compileJava   {
+  sourceCompatibility = '1.8'
+  targetCompatibility = '1.8'
+}
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+
+jar {
+	baseName = 'basic-api'
+	version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+       compile("org.springframework.boot:spring-boot-starter-web:1.5.3.RELEASE")
+	  testCompile group: 'org.testng', name: 'testng', version: '6.9.10'
+		compile group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.442'
+		compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.2.0'
+		compile 'com.googlecode.json-simple:json-simple:1.1.1'
+		compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version: '2.2.2'
+		compile group: 'com.amazonaws', name: 'aws-java-sdk-sqs', version: '1.11.442'
+
+	  // testCompile('org.springframework.boot:spring-boot-starter-test')
+      
+   }
+
+jar{
+	manifest{
+		attributes(
+		'Main-Class' : 'com.test.Application'
+		)
+	}
+	from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
